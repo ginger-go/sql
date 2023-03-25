@@ -7,6 +7,13 @@ type Sort struct {
 	Asc bool   `form:"asc"`
 }
 
+func Order(by string, asc bool) *Sort {
+	return &Sort{
+		By:  by,
+		Asc: asc,
+	}
+}
+
 func (s *Sort) Consume(tx *gorm.DB) *gorm.DB {
 	if s.By != "" {
 		if s.Asc {
