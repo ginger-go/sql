@@ -23,12 +23,12 @@ func FindAll[T any](tx *gorm.DB, clause *Clause) ([]T, error) {
 }
 
 // Count counts the number of records that match the given clause.
-func Count(tx *gorm.DB, clause *Clause) (int64, error) {
+func Count[T any](tx *gorm.DB, clause *Clause) (int64, error) {
 	if clause != nil {
 		tx = clause.Consume(tx)
 	}
 	var count int64
-	err := tx.Count(&count).Error
+	err := tx.Model(new(T)).Count(&count).Error
 	return count, err
 }
 
@@ -49,7 +49,7 @@ func FindAllComplex[T any](tx *gorm.DB, clause *Clause, sort *Sort, pagination *
 		return nil, nil, err
 	}
 	if pagination != nil {
-		pagination.Total, err = Count(tx, clause)
+		pagination.Total, err = Count[T](tx, clause)
 		if err != nil {
 			return nil, nil, err
 		}
