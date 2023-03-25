@@ -8,7 +8,7 @@ import (
 
 const (
 	OPERATOR_EQUAL         = "="
-	OPERATOR_NOT_EQUAL     = "!="
+	OPERATOR_NOT_EQUAL     = "<>"
 	OPERATOR_GREATER       = ">"
 	OPERATOR_LESS          = "<"
 	OPERATOR_GREATER_EQUAL = ">="
