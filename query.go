@@ -9,6 +9,9 @@ func FindOne[T any](tx *gorm.DB, clause *Clause) (*T, error) {
 	}
 	output := new(T)
 	err := tx.First(output).Error
+	if err != nil {
+		return nil, err
+	}
 	return output, err
 }
 
@@ -19,6 +22,9 @@ func FindAll[T any](tx *gorm.DB, clause *Clause) ([]T, error) {
 	}
 	output := make([]T, 0)
 	err := tx.Find(&output).Error
+	if err != nil {
+		return nil, err
+	}
 	return output, err
 }
 
