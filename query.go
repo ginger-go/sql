@@ -51,11 +51,13 @@ func FindAllComplex[T any](tx *gorm.DB, clause *Clause, sort *Sort, pagination *
 	if err != nil {
 		return nil, nil, err
 	}
-	if pagination != nil {
+	if pagination != nil && pagination.Page > 0 && pagination.Size > 0 {
 		pagination.Total, err = Count[T](tx, clause)
 		if err != nil {
 			return nil, nil, err
 		}
+	} else {
+		pagination = nil
 	}
 	return output, pagination, err
 }
