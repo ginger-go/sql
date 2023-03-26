@@ -39,7 +39,7 @@ func FindAllComplex[T any](tx *gorm.DB, clause *Clause, sort *Sort, pagination *
 	}
 	if sort != nil && sort.By != "" {
 		sort.By = safeField(sort.By)
-		if sort.By == "" {
+		if sort.By != "" {
 			tx = sort.Consume(tx)
 		}
 	}
