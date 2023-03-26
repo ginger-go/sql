@@ -37,10 +37,13 @@ func FindAllComplex[T any](tx *gorm.DB, clause *Clause, sort *Sort, pagination *
 	if clause != nil {
 		tx = clause.Consume(tx)
 	}
-	if sort != nil {
-		tx = sort.Consume(tx)
+	if sort != nil && sort.By != "" {
+		sort.By = safeField(sort.By)
+		if sort.By == "" {
+			tx = sort.Consume(tx)
+		}
 	}
-	if pagination != nil {
+	if pagination != nil && pagination.Page > 0 && pagination.Size > 0 {
 		tx = pagination.Consume(tx)
 	}
 	output := make([]T, 0)
